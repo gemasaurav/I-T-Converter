@@ -92,3 +92,98 @@ exitBtn.addEventListener("click",function(){
     }
 
 });
+// ======================================
+// Hidden File Inputs
+// ======================================
+
+const cameraInput = document.getElementById("cameraInput");
+
+const galleryInput = document.getElementById("galleryInput");
+
+const pdfInput = document.getElementById("pdfInput");
+
+const browseInput = document.getElementById("browseInput");
+
+// ======================================
+// Camera
+// ======================================
+
+cameraBtn.addEventListener("click", function(){
+
+    cameraInput.click();
+
+});
+
+// ======================================
+// Gallery
+// ======================================
+
+galleryBtn.addEventListener("click", function(){
+
+    galleryInput.click();
+
+});
+
+// ======================================
+// PDF
+// ======================================
+
+pdfBtn.addEventListener("click", function(){
+
+    pdfInput.click();
+
+});
+
+// ======================================
+// Browse Files
+// ======================================
+
+browseBtn.addEventListener("click", function(){
+
+    browseInput.click();
+
+});
+
+// ======================================
+// File Selected Events
+// ======================================
+
+cameraInput.addEventListener("change", function(){
+
+    if(this.files.length>0){
+
+        alert("Camera Image Selected:\n\n"+this.files[0].name);
+
+    }
+
+});
+
+galleryInput.addEventListener("change", function(){
+
+    if(this.files.length>0){
+
+        alert("Gallery Image Selected:\n\n"+this.files[0].name);
+
+    }
+
+});
+
+pdfInput.addEventListener("change", function(){
+
+    if(this.files.length>0){
+
+        alert("PDF Selected:\n\n"+this.files[0].name);
+
+    }
+
+});
+
+browseInput.addEventListener("change", function(){
+
+    if(this.files.length>0){
+
+        alert("File Selected:\n\n"+this.files[0].name);
+
+    }
+
+});
