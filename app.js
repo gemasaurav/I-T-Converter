@@ -157,6 +157,23 @@ browseBtn.addEventListener("click", function(){
 
 const previewImage=document.getElementById("previewImage");
 const extractBtn=document.getElementById("extractBtn");
+const resultSection = document.getElementById("resultSection");
+
+const ocrResult = document.getElementById("ocrResult");
+
+const charCount = document.getElementById("charCount");
+
+const wordCount = document.getElementById("wordCount");
+
+const lineCount = document.getElementById("lineCount");
+
+const copyResultBtn = document.getElementById("copyResultBtn");
+
+const saveResultBtn = document.getElementById("saveResultBtn");
+
+const shareResultBtn = document.getElementById("shareResultBtn");
+
+const newImageBtn = document.getElementById("newImageBtn");
 function showImage(file){
 
     const reader=new FileReader();
@@ -235,7 +252,23 @@ extractBtn.addEventListener("click", async function(){
 
         extractBtn.innerHTML = "✅ Completed";
 
-        alert(result.data.text);
+ocrResult.value = result.data.text;
+
+resultSection.style.display = "block";
+
+// Statistics
+
+charCount.innerHTML = "Characters : " + result.data.text.length;
+
+const words = result.data.text.trim()===""
+?0
+:result.data.text.trim().split(/\s+/).length;
+
+wordCount.innerHTML = "Words : " + words;
+
+const lines = result.data.text.split("\n").length;
+
+lineCount.innerHTML = "Lines : " + lines;
 
     }
 
@@ -248,5 +281,32 @@ extractBtn.addEventListener("click", async function(){
         console.log(err);
 
     }
+
+});
+// ======================================
+// COPY RESULT
+// ======================================
+
+copyResultBtn.addEventListener("click", async function(){
+
+    await navigator.clipboard.writeText(ocrResult.value);
+
+    alert("Copied Successfully!");
+
+});
+
+// ======================================
+// NEW IMAGE
+// ======================================
+
+newImageBtn.addEventListener("click",function(){
+
+    resultSection.style.display="none";
+
+    document.getElementById("previewSection").style.display="none";
+
+    ocrResult.value="";
+
+    extractBtn.innerHTML="🔍 EXTRACT TEXT";
 
 });
