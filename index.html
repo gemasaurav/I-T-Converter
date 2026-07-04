@@ -182,6 +182,107 @@ class="mainButton">
 </button>
 
 </div>
+<!-- ========================= -->
+<!-- OCR Result Section -->
+<!-- ========================= -->
+
+<div id="resultSection" style="display:none; margin-top:30px;">
+
+<h2 style="color:gold;">
+
+Extracted Text
+
+</h2>
+
+<textarea
+
+id="ocrResult"
+
+rows="12"
+
+style="width:95%;
+
+margin-top:20px;
+
+padding:15px;
+
+font-size:16px;
+
+border-radius:10px;
+
+border:2px solid gold;
+
+background:#222;
+
+color:white;
+
+resize:vertical;">
+
+</textarea>
+
+<div style="margin-top:20px;">
+
+<p id="charCount">
+
+Characters : 0
+
+</p>
+
+<p id="wordCount">
+
+Words : 0
+
+</p>
+
+<p id="lineCount">
+
+Lines : 0
+
+</p>
+
+</div>
+
+<button
+
+id="copyResultBtn"
+
+class="mainButton">
+
+📋 COPY
+
+</button>
+
+<button
+
+id="saveResultBtn"
+
+class="mainButton">
+
+💾 SAVE
+
+</button>
+
+<button
+
+id="shareResultBtn"
+
+class="mainButton">
+
+📤 SHARE
+
+</button>
+
+<button
+
+id="newImageBtn"
+
+class="mainButton">
+
+🔄 NEW IMAGE
+
+</button>
+
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="app.js"></script>
