@@ -145,7 +145,37 @@ id="exitBtn">
 🚪 EXIT
 
 </button>
+<!-- ========================= -->
+<!-- OCR Preview Screen -->
+<!-- ========================= -->
 
+<div id="ocrScreen" style="display:none; text-align:center; padding:20px;">
+
+<h2>Selected Image</h2>
+
+<img id="previewImage"
+
+style="max-width:90%;
+
+margin-top:20px;
+
+border-radius:10px;
+
+border:2px solid gold;">
+
+<br><br>
+
+<button
+
+id="extractBtn"
+
+class="mainButton">
+
+🔍 EXTRACT TEXT
+
+</button>
+
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="app.js"></script>
