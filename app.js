@@ -219,18 +219,31 @@ browseInput.addEventListener("change", function(){
 
 extractBtn.addEventListener("click", async function(){
 
-    extractBtn.innerHTML="⏳ Extracting...";
+    alert("Extract Button Pressed");
 
-    const result = await Tesseract.recognize(
+    extractBtn.innerHTML = "⏳ Extracting...";
 
-        previewImage.src,
+    try{
 
-        "eng"
+        const result = await Tesseract.recognize(
+            previewImage.src,
+            "eng"
+        );
 
-    );
+        extractBtn.innerHTML = "✅ Completed";
 
-    extractBtn.innerHTML="✅ Completed";
+        alert(result.data.text);
 
-    alert(result.data.text);
+    }
+
+    catch(err){
+
+        extractBtn.innerHTML = "🔍 EXTRACT TEXT";
+
+        alert("OCR Error:\n\n" + err);
+
+        console.log(err);
+
+    }
 
 });
