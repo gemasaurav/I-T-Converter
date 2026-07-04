@@ -156,6 +156,8 @@ browseBtn.addEventListener("click", function(){
 // ===============================
 
 const previewImage=document.getElementById("previewImage");
+const ocrCanvas = document.getElementById("ocrCanvas");
+const ctx = ocrCanvas.getContext("2d");
 const extractBtn=document.getElementById("extractBtn");
 const resultSection = document.getElementById("resultSection");
 
@@ -245,8 +247,50 @@ extractBtn.addEventListener("click", async function(){
 
     try{
 extractBtn.innerHTML = "🔍 Reading Text...";
+    // ==========================
+// Automatic Image Processing
+// ==========================
+
+ocrCanvas.width = previewImage.naturalWidth;
+ocrCanvas.height = previewImage.naturalHeight;
+
+ctx.drawImage(
+    previewImage,
+    0,
+    0,
+    ocrCanvas.width,
+    ocrCanvas.height
+);
+
+let imgData = ctx.getImageData(
+    0,
+    0,
+    ocrCanvas.width,
+    ocrCanvas.height
+);
+
+let data = imgData.data;
+
+for(let i=0;i<data.length;i+=4){
+
+    let gray =
+    data[i]*0.299+
+    data[i+1]*0.587+
+    data[i+2]*0.114;
+
+    gray = gray*1.25;
+
+    if(gray>255) gray=255;
+
+    data[i]=gray;
+    data[i+1]=gray;
+    data[i+2]=gray;
+
+}
+
+ctx.putImageData(imgData,0,0);    
         const result = await Tesseract.recognize(
-    previewImage.src,
+    ocrCanvas,
     "eng",
     {
         logger: m => console.log(m)
