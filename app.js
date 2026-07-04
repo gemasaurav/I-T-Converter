@@ -154,8 +154,6 @@ browseBtn.addEventListener("click", function(){
 
 const previewImage=document.getElementById("previewImage");
 
-const ocrScreen=document.getElementById("ocrScreen");
-
 function showImage(file){
 
     const reader=new FileReader();
@@ -164,9 +162,7 @@ function showImage(file){
 
         previewImage.src=e.target.result;
 
-        homeScreen.style.display="none";
-
-        ocrScreen.style.display="block";
+        document.getElementById("previewSection").style.display="block";
 
     }
 
