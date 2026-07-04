@@ -193,15 +193,6 @@ galleryInput.addEventListener("change",function(){
     }
 
 });
-galleryInput.addEventListener("change", function(){
-
-    if(this.files.length>0){
-
-        alert("Gallery Image Selected:\n\n"+this.files[0].name);
-
-    }
-
-});
 
 pdfInput.addEventListener("change", function(){
 
