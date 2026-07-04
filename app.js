@@ -26,7 +26,7 @@ const browseBtn = document.getElementById("browseBtn");
 // Splash Screen Timer
 // ======================================
 
-window.onload = function(){
+document.addEventListener("DOMContentLoaded", function(){
 
     setTimeout(function(){
 
@@ -36,7 +36,7 @@ window.onload = function(){
 
     },4000);
 
-};
+});
 
 // ======================================
 // MENU
