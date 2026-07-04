@@ -168,7 +168,7 @@ const charCount = document.getElementById("charCount");
 const wordCount = document.getElementById("wordCount");
 
 const lineCount = document.getElementById("lineCount");
-
+const confidenceCount = document.getElementById("confidenceCount");
 const copyResultBtn = document.getElementById("copyResultBtn");
 
 const saveResultBtn = document.getElementById("saveResultBtn");
@@ -300,7 +300,10 @@ ctx.putImageData(imgData,0,0);
         extractBtn.innerHTML = "✅ Completed";
 
 ocrResult.value = result.data.text;
+let confidence = Math.round(result.data.confidence);
 
+confidenceCount.innerHTML =
+"OCR Confidence : " + confidence + "%";
 resultSection.style.display = "block";
 
 // Statistics
