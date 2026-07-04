@@ -241,14 +241,17 @@ extractBtn.addEventListener("click", async function(){
 
     alert("Extract Button Pressed");
 
-    extractBtn.innerHTML = "⏳ Extracting...";
+    extractBtn.innerHTML = "⏳ Preparing Image...";
 
     try{
-
+extractBtn.innerHTML = "🔍 Reading Text...";
         const result = await Tesseract.recognize(
-            previewImage.src,
-            "eng"
-        );
+    previewImage.src,
+    "eng",
+    {
+        logger: m => console.log(m)
+    }
+);
 
         extractBtn.innerHTML = "✅ Completed";
 
