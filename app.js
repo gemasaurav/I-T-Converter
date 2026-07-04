@@ -213,3 +213,24 @@ browseInput.addEventListener("change", function(){
     }
 
 });
+// ======================================
+// OCR Extraction
+// ======================================
+
+extractBtn.addEventListener("click", async function(){
+
+    extractBtn.innerHTML="⏳ Extracting...";
+
+    const result = await Tesseract.recognize(
+
+        previewImage.src,
+
+        "eng"
+
+    );
+
+    extractBtn.innerHTML="✅ Completed";
+
+    alert(result.data.text);
+
+});
