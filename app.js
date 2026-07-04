@@ -148,16 +148,55 @@ browseBtn.addEventListener("click", function(){
 // File Selected Events
 // ======================================
 
-cameraInput.addEventListener("change", function(){
+// ===============================
+// Preview Selected Image
+// ===============================
+
+const previewImage=document.getElementById("previewImage");
+
+const ocrScreen=document.getElementById("ocrScreen");
+
+function showImage(file){
+
+    const reader=new FileReader();
+
+    reader.onload=function(e){
+
+        previewImage.src=e.target.result;
+
+        homeScreen.style.display="none";
+
+        ocrScreen.style.display="block";
+
+    }
+
+    reader.readAsDataURL(file);
+
+}
+
+// Camera
+
+cameraInput.addEventListener("change",function(){
 
     if(this.files.length>0){
 
-        alert("Camera Image Selected:\n\n"+this.files[0].name);
+        showImage(this.files[0]);
 
     }
 
 });
 
+// Gallery
+
+galleryInput.addEventListener("change",function(){
+
+    if(this.files.length>0){
+
+        showImage(this.files[0]);
+
+    }
+
+});
 galleryInput.addEventListener("change", function(){
 
     if(this.files.length>0){
