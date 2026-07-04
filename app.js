@@ -153,7 +153,7 @@ browseBtn.addEventListener("click", function(){
 // ===============================
 
 const previewImage=document.getElementById("previewImage");
-
+const extractBtn=document.getElementById("extractBtn");
 function showImage(file){
 
     const reader=new FileReader();
