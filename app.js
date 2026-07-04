@@ -18,7 +18,10 @@ const menuBtn = document.getElementById("menuBtn");
 const aboutBtn = document.getElementById("aboutBtn");
 
 const exitBtn = document.getElementById("exitBtn");
-
+const cameraBtn = document.getElementById("cameraBtn");
+const galleryBtn = document.getElementById("galleryBtn");
+const pdfBtn = document.getElementById("pdfBtn");
+const browseBtn = document.getElementById("browseBtn");
 // ======================================
 // Splash Screen Timer
 // ======================================
