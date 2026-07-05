@@ -428,3 +428,48 @@ saveResultBtn.addEventListener("click", function(){
     alert("File Saved Successfully!");
 
 });
+// ======================================
+// SHARE RESULT
+// ======================================
+
+shareResultBtn.addEventListener("click", async function(){
+
+    if(ocrResult.value.trim() === ""){
+
+        alert("No text available to share!");
+
+        return;
+
+    }
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share({
+
+                title: "I-T Converter",
+
+                text: ocrResult.value
+
+            });
+
+        }
+
+        catch(err){
+
+            console.log(err);
+
+        }
+
+    }
+
+    else{
+
+        await navigator.clipboard.writeText(ocrResult.value);
+
+        alert("Sharing is not supported on this device.\n\nThe text has been copied to the clipboard.");
+
+    }
+
+});
