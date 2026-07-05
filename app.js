@@ -252,7 +252,11 @@ extractBtn.innerHTML = "🔍 Reading Text...";
     // ==========================
 // Automatic Image Processing
 // ==========================
-
+if (!previewImage.complete || previewImage.naturalWidth === 0) {
+    alert("Please wait until the image finishes loading.");
+    extractBtn.innerHTML = "🔍 EXTRACT TEXT";
+    return;
+}
 ocrCanvas.width = previewImage.naturalWidth;
 ocrCanvas.height = previewImage.naturalHeight;
 
