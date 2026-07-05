@@ -336,7 +336,7 @@ else{
 }
         const result = await Tesseract.recognize(
     ocrCanvas,
-    "eng",
+    "eng+hin",
     {
         logger: m => console.log(m)
     }
