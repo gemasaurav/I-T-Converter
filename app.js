@@ -387,3 +387,44 @@ newImageBtn.addEventListener("click",function(){
     extractBtn.innerHTML="🔍 EXTRACT TEXT";
 
 });
+// ======================================
+// SAVE RESULT
+// ======================================
+
+saveResultBtn.addEventListener("click", function(){
+
+    const now = new Date();
+
+    const fileName =
+    "IT_Converter_" +
+
+    now.getFullYear() + "-" +
+
+    String(now.getMonth()+1).padStart(2,"0") + "-" +
+
+    String(now.getDate()).padStart(2,"0") + "_" +
+
+    String(now.getHours()).padStart(2,"0") + "-" +
+
+    String(now.getMinutes()).padStart(2,"0") +
+
+    ".txt";
+
+    const blob = new Blob(
+        [ocrResult.value],
+        {type:"text/plain"}
+    );
+
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+
+    link.download = fileName;
+
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+
+    alert("File Saved Successfully!");
+
+});
