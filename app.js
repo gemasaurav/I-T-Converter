@@ -270,7 +270,21 @@ let imgData = ctx.getImageData(
 );
 
 let data = imgData.data;
+// ==========================
+// Image Brightness Analysis
+// ==========================
 
+let brightness = 0;
+
+for(let i=0;i<data.length;i+=4){
+
+    brightness += (data[i] + data[i+1] + data[i+2]) / 3;
+
+}
+
+brightness = brightness / (data.length / 4);
+
+console.log("Image Brightness:", brightness);
 for(let i=0;i<data.length;i+=4){
 
     let gray =
