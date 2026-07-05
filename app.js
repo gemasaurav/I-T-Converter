@@ -278,6 +278,22 @@ let data = imgData.data;
 
 let brightness = 0;
 
+// Calculate average brightness
+
+for(let i=0;i<data.length;i+=4){
+
+    brightness +=
+    (data[i] + data[i+1] + data[i+2]) / 3;
+
+}
+
+brightness =
+brightness / (data.length / 4);
+
+console.log("Brightness:", brightness);
+
+// Decide image type
+
 if(brightness > 170){
 
     // Bright document / screenshot
