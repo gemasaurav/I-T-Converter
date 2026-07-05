@@ -276,7 +276,11 @@ let data = imgData.data;
 
 let brightness = 0;
 
-for(let i=0;i<data.length;i+=4){
+if(brightness > 170){
+
+    // Bright document / screenshot
+
+    for(let i=0;i<data.length;i+=4){
 
     brightness += (data[i] + data[i+1] + data[i+2]) / 3;
 
@@ -302,7 +306,16 @@ for(let i=0;i<data.length;i+=4){
 
 }
 
-ctx.putImageData(imgData,0,0);    
+ctx.putImageData(imgData,0,0);
+    }
+
+else{
+
+    // Color image
+
+    console.log("Keeping original colors for OCR");
+
+}
         const result = await Tesseract.recognize(
     ocrCanvas,
     "eng",
