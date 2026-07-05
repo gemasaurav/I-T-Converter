@@ -230,9 +230,9 @@ pdfInput.addEventListener("change", function(){
 
 browseInput.addEventListener("change", function(){
 
-    if(this.files.length>0){
+    if(this.files.length > 0){
 
-        alert("File Selected:\n\n"+this.files[0].name);
+        showImage(this.files[0]);
 
     }
 
