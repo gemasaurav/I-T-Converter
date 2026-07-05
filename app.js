@@ -143,6 +143,8 @@ pdfBtn.addEventListener("click", function(){
 
 browseBtn.addEventListener("click", function(){
 
+    browseInput.value = "";
+
     browseInput.click();
 
 });
