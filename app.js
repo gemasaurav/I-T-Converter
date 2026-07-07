@@ -133,6 +133,16 @@ galleryBtn.addEventListener("click", function(){
 
 pdfBtn.addEventListener("click", function(){
 
+    if(typeof pdfjsLib === "undefined"){
+
+        alert("PDF.js NOT Loaded");
+
+    }else{
+
+        alert("PDF.js Loaded Successfully");
+
+    }
+
     pdfInput.click();
 
 });
