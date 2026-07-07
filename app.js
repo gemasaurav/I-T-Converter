@@ -218,13 +218,35 @@ galleryInput.addEventListener("change",function(){
 
 });
 
-pdfInput.addEventListener("change", function(){
+pdfInput.addEventListener("change", async function(){
 
-    if(this.files.length>0){
+    if(this.files.length === 0) return;
 
-        alert("PDF Selected:\n\n"+this.files[0].name);
+    const file = this.files[0];
 
-    }
+    const arrayBuffer = await file.arrayBuffer();
+
+    const pdf = await pdfjsLib.getDocument({
+        data: arrayBuffer
+    }).promise;
+
+    const page = await pdf.getPage(1);
+
+    const viewport = page.getViewport({ scale: 2 });
+
+    ocrCanvas.width = viewport.width;
+    ocrCanvas.height = viewport.height;
+
+    const ctx = ocrCanvas.getContext("2d");
+
+    await page.render({
+        canvasContext: ctx,
+        viewport: viewport
+    }).promise;
+
+    previewImage.src = ocrCanvas.toDataURL("image/png");
+
+    alert("PDF Loaded Successfully.\n\nNow press Extract Text.");
 
 });
 
