@@ -86,11 +86,11 @@ Design & Developed by
 // EXIT
 // ======================================
 
-exitBtn.addEventListener("click",function(){
+exitBtn.addEventListener("click", function(){
 
     if(confirm("Exit I-T Converter?")){
 
-        window.close();
+        location.href = "about:blank";
 
     }
 
