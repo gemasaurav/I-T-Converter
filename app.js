@@ -257,10 +257,9 @@ pdfInput.addEventListener("change", async function(){
     previewImage.src = ocrCanvas.toDataURL("image/png");
 previewImage.style.display = "block";
 
-if(previewContainer){
-    previewContainer.style.display = "block";
-}
-    alert("PDF Loaded Successfully.\n\nNow press Extract Text.");
+document.getElementById("previewSection").style.display = "block";
+
+alert("PDF Loaded Successfully.\n\nNow press Extract Text.");
 
 });
 
