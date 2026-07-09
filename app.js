@@ -259,8 +259,6 @@ previewImage.style.display = "block";
 
 document.getElementById("previewSection").style.display = "block";
 
-alert("PDF Loaded Successfully.\n\nNow press Extract Text.");
-
 });
 
 browseInput.addEventListener("change", function(){
