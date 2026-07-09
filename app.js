@@ -139,8 +139,6 @@ pdfBtn.addEventListener("click", function(){
 
     }else{
 
-        alert("PDF.js Loaded Successfully");
-
     }
 
     pdfInput.click();
