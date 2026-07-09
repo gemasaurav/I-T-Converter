@@ -290,8 +290,6 @@ browseInput.addEventListener("change", function(){
 
 extractBtn.addEventListener("click", async function(){
 
-    alert("Extract Button Pressed");
-
     extractBtn.innerHTML = "⏳ Preparing Image...";
 
     try{
