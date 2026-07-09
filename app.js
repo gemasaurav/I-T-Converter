@@ -374,6 +374,8 @@ for(let i=0;i<data.length;i+=4){
 }
 
 ctx.putImageData(imgData,0,0);
+    ctx.filter = "contrast(180%) brightness(115%)";
+ctx.drawImage(ocrCanvas, 0, 0);
     }
 
 else{
