@@ -255,7 +255,11 @@ pdfInput.addEventListener("change", async function(){
     }).promise;
 
     previewImage.src = ocrCanvas.toDataURL("image/png");
+previewImage.style.display = "block";
 
+if(previewContainer){
+    previewContainer.style.display = "block";
+}
     alert("PDF Loaded Successfully.\n\nNow press Extract Text.");
 
 });
