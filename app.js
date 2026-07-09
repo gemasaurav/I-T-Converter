@@ -262,9 +262,25 @@ pdfInput.addEventListener("change", async function(){
 
 browseInput.addEventListener("change", function(){
 
-    if(this.files.length > 0){
+    if(this.files.length === 0) return;
 
-        showImage(this.files[0]);
+    const file = this.files[0];
+
+    if(file.type.startsWith("image/")){
+
+        showImage(file);
+
+    }
+    else if(file.type === "application/pdf"){
+
+        pdfInput.files = this.files;
+
+        pdfInput.dispatchEvent(new Event("change"));
+
+    }
+    else{
+
+        alert("Unsupported file type.");
 
     }
 
