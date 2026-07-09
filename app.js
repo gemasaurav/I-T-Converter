@@ -90,7 +90,22 @@ exitBtn.addEventListener("click", function(){
 
     if(confirm("Exit I-T Converter?")){
 
-        location.href = "about:blank";
+        document.body.innerHTML = `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            text-align:center;
+            font-family:Arial,sans-serif;
+            padding:20px;
+        ">
+            <div>
+                <h2>🙏 Thanks for Using I-T Converter</h2>
+                <p>Kindly close the application.</p>
+            </div>
+        </div>
+        `;
 
     }
 
