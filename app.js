@@ -219,13 +219,11 @@ function showImage(file){
 
 // Camera
 
-cameraInput.addEventListener("change",function(){
+cameraBtn.addEventListener("click", function(){
 
-    if(this.files.length>0){
+    cameraInput.setAttribute("capture","environment");
 
-        showImage(this.files[0]);
-
-    }
+    cameraInput.click();
 
 });
 
