@@ -128,7 +128,9 @@ const browseInput = document.getElementById("browseInput");
 
 cameraBtn.addEventListener("click", function(){
 
-    galleryInput.click();
+    console.log("Camera button pressed");
+
+    cameraInput.click();
 
 });
 
