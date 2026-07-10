@@ -552,7 +552,7 @@ shareResultBtn.addEventListener("click", async function(){
 
         await navigator.clipboard.writeText(ocrResult.value);
 
-alert("Text copied.\n\nOpen WhatsApp, Email or Notes and Paste.");
+console.log("Text copied to clipboard");
 
     }
 
