@@ -554,7 +554,7 @@ shareResultBtn.addEventListener("click", async function(){
 
         await navigator.clipboard.writeText(ocrResult.value);
 
-        alert("Sharing is not supported on this device.\n\nThe text has been copied to the clipboard.");
+alert("Text copied.\n\nOpen WhatsApp, Email or Notes and Paste.");
 
     }
 
