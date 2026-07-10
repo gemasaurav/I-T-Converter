@@ -128,6 +128,8 @@ const browseInput = document.getElementById("browseInput");
 
 cameraBtn.addEventListener("click", function(){
 
+    cameraInput.setAttribute("capture","environment");
+
     cameraInput.click();
 
 });
