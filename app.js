@@ -309,7 +309,7 @@ extractBtn.addEventListener("click", async function(){
 
     try{
 extractBtn.innerHTML = "🔍 Reading Text...";
-    // ==========================
+// ==========================
 // Automatic Image Processing
 // ==========================
 if (!previewImage.complete || previewImage.naturalWidth === 0) {
