@@ -228,7 +228,15 @@ cameraBtn.addEventListener("click", function(){
     cameraInput.click();
 
 });
+cameraInput.addEventListener("change", function(){
 
+    if(this.files.length > 0){
+
+        showImage(this.files[0]);
+
+    }
+
+});
 // Gallery
 
 galleryInput.addEventListener("change",function(){
