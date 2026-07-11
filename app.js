@@ -560,7 +560,7 @@ shareResultBtn.addEventListener("click", async function(){
 
         await navigator.clipboard.writeText(ocrResult.value);
 
-console.log("Text copied to clipboard");
+alert("Text copied.\n\nPaste it into WhatsApp, Email or Notes.");
 
     }
 
