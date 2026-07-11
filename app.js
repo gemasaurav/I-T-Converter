@@ -368,7 +368,7 @@ console.log("Brightness:", brightness);
 
 if(brightness > 170){
 
-    // Bright document / screenshot
+ // Bright document / screenshot
 
     for(let i=0;i<data.length;i+=4){
 
