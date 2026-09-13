@@ -23,6 +23,16 @@ accept="image/*"
 capture="environment"
 hidden>
 
+<!-- Live Camera Modal -->
+<div id="cameraModal" style="display:none; position:fixed; inset:0; background:#000; z-index:10000; flex-direction:column; align-items:center; justify-content:center;">
+  <video id="cameraVideo" autoplay playsinline style="width:100%; max-width:500px; max-height:70vh; object-fit:cover; border-radius:12px;"></video>
+  
+  <div style="margin-top:25px; display:flex; gap:20px; flex-wrap:wrap; justify-content:center;">
+    <button id="captureBtn" class="mainButton" style="width:auto; padding:14px 30px;">📸 CAPTURE</button>
+    <button id="closeCameraBtn" class="mainButton" style="width:auto; padding:14px 30px; background:#333;">❌ CLOSE</button>
+  </div>
+</div>
+    
 <input
 type="file"
 id="galleryInput"
