@@ -1,73 +1,52 @@
 // ======================================
 // I-T Converter v1.0
-// App Controller
+// App Controller (Updated with Live Camera)
 // ======================================
 
 // Splash Screen
-
 const splashScreen = document.getElementById("splashScreen");
 
 // Home Screen
-
 const homeScreen = document.getElementById("homeScreen");
 
 // Buttons
-
 const menuBtn = document.getElementById("menuBtn");
-
 const aboutBtn = document.getElementById("aboutBtn");
-
 const exitBtn = document.getElementById("exitBtn");
 const cameraBtn = document.getElementById("cameraBtn");
 const galleryBtn = document.getElementById("galleryBtn");
 const pdfBtn = document.getElementById("pdfBtn");
 const browseBtn = document.getElementById("browseBtn");
+
 // ======================================
 // Splash Screen Timer
 // ======================================
-
-document.addEventListener("DOMContentLoaded", function(){
-
-    setTimeout(function(){
-
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
         splashScreen.style.display = "none";
-
         homeScreen.style.display = "block";
-
-    },4000);
-
+    }, 4000);
 });
 
 // ======================================
 // MENU
 // ======================================
-
-menuBtn.addEventListener("click",function(){
-
+menuBtn.addEventListener("click", function () {
     alert(
-
 `Menu
 
 Home
-
 About
-
 Privacy
-
 Exit`
-
     );
-
 });
 
 // ======================================
 // ABOUT
 // ======================================
-
-aboutBtn.addEventListener("click",function(){
-
+aboutBtn.addEventListener("click", function () {
     alert(
-
 `I-T Converter
 
 Version 1.0.0
@@ -77,19 +56,14 @@ Offline Image-to-Text Converter
 Design & Developed by
 
 100, 000 000 000`
-
     );
-
 });
 
 // ======================================
 // EXIT
 // ======================================
-
-exitBtn.addEventListener("click", function(){
-
-    if(confirm("Exit I-T Converter?")){
-
+exitBtn.addEventListener("click", function () {
+    if (confirm("Exit I-T Converter?")) {
         document.body.innerHTML = `
         <div style="
             display:flex;
@@ -106,157 +80,98 @@ exitBtn.addEventListener("click", function(){
             </div>
         </div>
         `;
-
     }
-
 });
+
 // ======================================
 // Hidden File Inputs
 // ======================================
-
 const cameraInput = document.getElementById("cameraInput");
-
 const galleryInput = document.getElementById("galleryInput");
-
 const pdfInput = document.getElementById("pdfInput");
-
 const browseInput = document.getElementById("browseInput");
 
-
 // ======================================
-// Gallery
+// Elements for Preview & OCR
 // ======================================
-
-galleryBtn.addEventListener("click", function(){
-
-    galleryInput.click();
-
-});
-
-// ======================================
-// PDF
-// ======================================
-
-pdfBtn.addEventListener("click", function(){
-
-    if(typeof pdfjsLib === "undefined"){
-
-        alert("PDF.js NOT Loaded");
-
-    }else{
-
-    }
-
-    pdfInput.click();
-
-});
-
-// ======================================
-// Browse Files
-// ======================================
-
-browseBtn.addEventListener("click", function(){
-
-    browseInput.value = "";
-
-    browseInput.click();
-
-});
-
-// ======================================
-// File Selected Events
-// ======================================
-
-// ===============================
-// Preview Selected Image
-// ===============================
-
-const previewImage=document.getElementById("previewImage");
+const previewImage = document.getElementById("previewImage");
 const ocrCanvas = document.getElementById("ocrCanvas");
 const ctx = ocrCanvas.getContext("2d");
-const extractBtn=document.getElementById("extractBtn");
+const extractBtn = document.getElementById("extractBtn");
 const resultSection = document.getElementById("resultSection");
 
 const ocrResult = document.getElementById("ocrResult");
-
 const charCount = document.getElementById("charCount");
-
 const wordCount = document.getElementById("wordCount");
-
 const lineCount = document.getElementById("lineCount");
 const confidenceCount = document.getElementById("confidenceCount");
+
 const copyResultBtn = document.getElementById("copyResultBtn");
-
 const saveResultBtn = document.getElementById("saveResultBtn");
-
 const shareResultBtn = document.getElementById("shareResultBtn");
-
 const newImageBtn = document.getElementById("newImageBtn");
-function showImage(file){
 
-    const reader=new FileReader();
-
-    reader.onload=function(e){
-
-        previewImage.src=e.target.result;
-
-        document.getElementById("previewSection").style.display="block";
-
-    }
-
+// ======================================
+// Show Image Preview
+// ======================================
+function showImage(file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        document.getElementById("previewSection").style.display = "block";
+        resultSection.style.display = "none";
+    };
     reader.readAsDataURL(file);
-
 }
 
 // ======================================
 // LIVE CAMERA (getUserMedia)
 // ======================================
-
-const cameraModal    = document.getElementById("cameraModal");
-const cameraVideo    = document.getElementById("cameraVideo");
-const captureBtn     = document.getElementById("captureBtn");
+const cameraModal = document.getElementById("cameraModal");
+const cameraVideo = document.getElementById("cameraVideo");
+const captureBtn = document.getElementById("captureBtn");
 const closeCameraBtn = document.getElementById("closeCameraBtn");
 
 let cameraStream = null;
 
 async function openCamera() {
-  // Prefer rear camera
-  const constraints = {
-    video: {
-      facingMode: { ideal: "environment" },
-      width:  { ideal: 1920 },
-      height: { ideal: 1080 }
-    },
-    audio: false
-  };
+    // Prefer rear camera
+    const constraints = {
+        video: {
+            facingMode: { ideal: "environment" },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 }
+        },
+        audio: false
+    };
 
-  try {
-    cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
-    cameraVideo.srcObject = cameraStream;
-    cameraModal.style.display = "flex";
-  } catch (err) {
-    console.error("Primary camera failed:", err);
-    // Fallback to any available camera
     try {
-      cameraStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-      cameraVideo.srcObject = cameraStream;
-      cameraModal.style.display = "flex";
-    } catch (err2) {
-      alert("Camera access denied or not available.\n\nPlease allow camera permission and try again.");
+        cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+        cameraVideo.srcObject = cameraStream;
+        cameraModal.style.display = "flex";
+    } catch (err) {
+        console.error("Primary camera failed:", err);
+        // Fallback to any available camera
+        try {
+            cameraStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            cameraVideo.srcObject = cameraStream;
+            cameraModal.style.display = "flex";
+        } catch (err2) {
+            alert("Camera access denied or not available.\n\nPlease allow camera permission and try again.");
+        }
     }
-  }
 }
 
 function closeCamera() {
-  if (cameraStream) {
-    cameraStream.getTracks().forEach(track => track.stop());
-    cameraStream = null;
-  }
-  cameraVideo.srcObject = null;
-  cameraModal.style.display = "none";
+    if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+    cameraVideo.srcObject = null;
+    cameraModal.style.display = "none";
 }
 
-// Open live camera
+// Open live camera when user taps CAMERA button
 cameraBtn.addEventListener("click", openCamera);
 
 // Close camera
@@ -264,53 +179,57 @@ closeCameraBtn.addEventListener("click", closeCamera);
 
 // Capture photo from live stream
 captureBtn.addEventListener("click", function () {
-  if (!cameraStream) return;
+    if (!cameraStream) return;
 
-  const canvas = document.createElement("canvas");
-  canvas.width  = cameraVideo.videoWidth;
-  canvas.height = cameraVideo.videoHeight;
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(cameraVideo, 0, 0);
+    const canvas = document.createElement("canvas");
+    canvas.width = cameraVideo.videoWidth;
+    canvas.height = cameraVideo.videoHeight;
+    const tempCtx = canvas.getContext("2d");
+    tempCtx.drawImage(cameraVideo, 0, 0);
 
-  canvas.toBlob(function (blob) {
-    const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
-    showImage(file);   // uses your existing function
-    closeCamera();
-  }, "image/jpeg", 0.92);
+    canvas.toBlob(function (blob) {
+        const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
+        showImage(file);
+        closeCamera();
+    }, "image/jpeg", 0.92);
 });
 
+// ======================================
 // Gallery
-
-galleryInput.addEventListener("change",function(){
-
-    if(this.files.length>0){
-
-        showImage(this.files[0]);
-
-    }
-
+// ======================================
+galleryBtn.addEventListener("click", function () {
+    galleryInput.click();
 });
 
-pdfInput.addEventListener("change", async function(){
+galleryInput.addEventListener("change", function () {
+    if (this.files.length > 0) {
+        showImage(this.files[0]);
+    }
+});
 
-    if(this.files.length === 0) return;
+// ======================================
+// PDF
+// ======================================
+pdfBtn.addEventListener("click", function () {
+    if (typeof pdfjsLib === "undefined") {
+        alert("PDF.js NOT Loaded");
+        return;
+    }
+    pdfInput.click();
+});
+
+pdfInput.addEventListener("change", async function () {
+    if (this.files.length === 0) return;
 
     const file = this.files[0];
-
     const arrayBuffer = await file.arrayBuffer();
 
-    const pdf = await pdfjsLib.getDocument({
-        data: arrayBuffer
-    }).promise;
-
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     const page = await pdf.getPage(1);
-
     const viewport = page.getViewport({ scale: 2 });
 
     ocrCanvas.width = viewport.width;
     ocrCanvas.height = viewport.height;
-
-    const ctx = ocrCanvas.getContext("2d");
 
     await page.render({
         canvasContext: ctx,
@@ -318,292 +237,168 @@ pdfInput.addEventListener("change", async function(){
     }).promise;
 
     previewImage.src = ocrCanvas.toDataURL("image/png");
-previewImage.style.display = "block";
-
-document.getElementById("previewSection").style.display = "block";
-
+    document.getElementById("previewSection").style.display = "block";
+    resultSection.style.display = "none";
 });
 
-browseInput.addEventListener("change", function(){
+// ======================================
+// Browse Files
+// ======================================
+browseBtn.addEventListener("click", function () {
+    browseInput.value = "";
+    browseInput.click();
+});
 
-    if(this.files.length === 0) return;
+browseInput.addEventListener("change", function () {
+    if (this.files.length === 0) return;
 
     const file = this.files[0];
 
-    if(file.type.startsWith("image/")){
-
+    if (file.type.startsWith("image/")) {
         showImage(file);
-
-    }
-    else if(file.type === "application/pdf"){
-
-        pdfInput.files = this.files;
-
+    } else if (file.type === "application/pdf") {
+        // Reuse PDF handler
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        pdfInput.files = dataTransfer.files;
         pdfInput.dispatchEvent(new Event("change"));
-
-    }
-    else{
-
+    } else {
         alert("Unsupported file type.");
-
     }
-
 });
+
 // ======================================
 // OCR Extraction
 // ======================================
-
-extractBtn.addEventListener("click", async function(){
-
+extractBtn.addEventListener("click", async function () {
     extractBtn.innerHTML = "⏳ Preparing Image...";
 
-    try{
-extractBtn.innerHTML = "🔍 Reading Text...";
-// ==========================
-// Automatic Image Processing
-// ==========================
-if (!previewImage.complete || previewImage.naturalWidth === 0) {
-    alert("Please wait until the image finishes loading.");
-    extractBtn.innerHTML = "🔍 EXTRACT TEXT";
-    return;
-}
-ocrCanvas.width = previewImage.naturalWidth;
-ocrCanvas.height = previewImage.naturalHeight;
+    try {
+        if (!previewImage.complete || previewImage.naturalWidth === 0) {
+            alert("Please wait until the image finishes loading.");
+            extractBtn.innerHTML = "🔍 EXTRACT TEXT";
+            return;
+        }
 
-ctx.drawImage(
-    previewImage,
-    0,
-    0,
-    ocrCanvas.width,
-    ocrCanvas.height
-);
+        extractBtn.innerHTML = "🔍 Reading Text...";
 
-let imgData = ctx.getImageData(
-    0,
-    0,
-    ocrCanvas.width,
-    ocrCanvas.height
-);
+        ocrCanvas.width = previewImage.naturalWidth;
+        ocrCanvas.height = previewImage.naturalHeight;
+        ctx.drawImage(previewImage, 0, 0, ocrCanvas.width, ocrCanvas.height);
 
-let data = imgData.data;
-// ==========================
-// Image Brightness Analysis
-// ==========================
+        // Optional simple preprocessing (kept from original)
+        let imgData = ctx.getImageData(0, 0, ocrCanvas.width, ocrCanvas.height);
+        let data = imgData.data;
 
-let brightness = 0;
+        let brightness = 0;
+        for (let i = 0; i < data.length; i += 4) {
+            brightness += (data[i] + data[i + 1] + data[i + 2]) / 3;
+        }
+        brightness = brightness / (data.length / 4);
 
-// Calculate average brightness
+        if (brightness > 170) {
+            // Bright document / screenshot → convert to grayscale + boost
+            for (let i = 0; i < data.length; i += 4) {
+                let gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                gray = Math.min(255, gray * 1.25);
+                data[i] = data[i + 1] = data[i + 2] = gray;
+            }
+            ctx.putImageData(imgData, 0, 0);
+        }
 
-for(let i=0;i<data.length;i+=4){
-
-    brightness +=
-    (data[i] + data[i+1] + data[i+2]) / 3;
-
-}
-
-brightness =
-brightness / (data.length / 4);
-
-console.log("Brightness:", brightness);
-
-// Decide image type
-
-if(brightness > 170){
-
- // Bright document / screenshot
-
-    for(let i=0;i<data.length;i+=4){
-
-    brightness += (data[i] + data[i+1] + data[i+2]) / 3;
-
-}
-
-brightness = brightness / (data.length / 4);
-
-console.log("Image Brightness:", brightness);
-for(let i=0;i<data.length;i+=4){
-
-    let gray =
-    data[i]*0.299+
-    data[i+1]*0.587+
-    data[i+2]*0.114;
-
-    gray = gray*1.25;
-
-    if(gray>255) gray=255;
-
-    data[i]=gray;
-    data[i+1]=gray;
-    data[i+2]=gray;
-
-}
-
-ctx.putImageData(imgData,0,0);
-    ctx.filter = "contrast(180%) brightness(115%)";
-ctx.drawImage(ocrCanvas, 0, 0);
-    }
-
-else{
-
-    // Color image
-
-    console.log("Keeping original colors for OCR");
-
-}
-        const result = await Tesseract.recognize(
-    ocrCanvas,
-    "eng+hin",
-    {
-        logger: m => console.log(m)
-    }
-);
+        const result = await Tesseract.recognize(ocrCanvas, "eng+hin", {
+            logger: m => console.log(m)
+        });
 
         extractBtn.innerHTML = "✅ Completed";
 
-ocrResult.value = result.data.text;
-let confidence = Math.round(result.data.confidence);
+        ocrResult.value = result.data.text;
 
-confidenceCount.innerHTML =
-"OCR Confidence : " + confidence + "%";
-resultSection.style.display = "block";
+        let confidence = Math.round(result.data.confidence || 0);
+        confidenceCount.innerHTML = "OCR Confidence : " + confidence + "%";
 
-// Statistics
+        resultSection.style.display = "block";
 
-charCount.innerHTML = "Characters : " + result.data.text.length;
+        // Statistics
+        charCount.innerHTML = "Characters : " + result.data.text.length;
 
-const words = result.data.text.trim()===""
-?0
-:result.data.text.trim().split(/\s+/).length;
+        const words = result.data.text.trim() === ""
+            ? 0
+            : result.data.text.trim().split(/\s+/).length;
+        wordCount.innerHTML = "Words : " + words;
 
-wordCount.innerHTML = "Words : " + words;
+        const lines = result.data.text.split("\n").length;
+        lineCount.innerHTML = "Lines : " + lines;
 
-const lines = result.data.text.split("\n").length;
-
-lineCount.innerHTML = "Lines : " + lines;
-
-    }
-
-    catch(err){
-
+    } catch (err) {
         extractBtn.innerHTML = "🔍 EXTRACT TEXT";
-
         alert("OCR Error:\n\n" + err);
-
         console.log(err);
-
     }
-
 });
+
 // ======================================
 // COPY RESULT
 // ======================================
-
-copyResultBtn.addEventListener("click", async function(){
-
+copyResultBtn.addEventListener("click", async function () {
     await navigator.clipboard.writeText(ocrResult.value);
-
     alert("Copied Successfully!");
-
 });
 
 // ======================================
 // NEW IMAGE
 // ======================================
-
-newImageBtn.addEventListener("click",function(){
-
-    resultSection.style.display="none";
-
-    document.getElementById("previewSection").style.display="none";
-
-    ocrResult.value="";
-
-    extractBtn.innerHTML="🔍 EXTRACT TEXT";
-
+newImageBtn.addEventListener("click", function () {
+    resultSection.style.display = "none";
+    document.getElementById("previewSection").style.display = "none";
+    ocrResult.value = "";
+    extractBtn.innerHTML = "🔍 EXTRACT TEXT";
 });
+
 // ======================================
 // SAVE RESULT
 // ======================================
-
-saveResultBtn.addEventListener("click", function(){
-
+saveResultBtn.addEventListener("click", function () {
     const now = new Date();
-
     const fileName =
-    "IT_Converter_" +
+        "IT_Converter_" +
+        now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0") + "_" +
+        String(now.getHours()).padStart(2, "0") + "-" +
+        String(now.getMinutes()).padStart(2, "0") +
+        ".txt";
 
-    now.getFullYear() + "-" +
-
-    String(now.getMonth()+1).padStart(2,"0") + "-" +
-
-    String(now.getDate()).padStart(2,"0") + "_" +
-
-    String(now.getHours()).padStart(2,"0") + "-" +
-
-    String(now.getMinutes()).padStart(2,"0") +
-
-    ".txt";
-
-    const blob = new Blob(
-        [ocrResult.value],
-        {type:"text/plain"}
-    );
-
+    const blob = new Blob([ocrResult.value], { type: "text/plain" });
     const link = document.createElement("a");
-
     link.href = URL.createObjectURL(blob);
-
     link.download = fileName;
-
     link.click();
-
     URL.revokeObjectURL(link.href);
 
     alert("File Saved Successfully!");
-
 });
+
 // ======================================
 // SHARE RESULT
 // ======================================
-
-shareResultBtn.addEventListener("click", async function(){
-
-    if(ocrResult.value.trim() === ""){
-
+shareResultBtn.addEventListener("click", async function () {
+    if (ocrResult.value.trim() === "") {
         alert("No text available to share!");
-
         return;
-
     }
 
-    if(navigator.share){
-
-        try{
-
+    if (navigator.share) {
+        try {
             await navigator.share({
-
                 title: "I-T Converter",
-
                 text: ocrResult.value
-
             });
-
-        }
-
-        catch(err){
-
+        } catch (err) {
             console.log(err);
-
         }
-
-    }
-
-    else{
-
+    } else {
         await navigator.clipboard.writeText(ocrResult.value);
-
-alert("Text copied.\n\nPaste it into WhatsApp, Email or Notes.");
-
+        alert("Text copied.\n\nPaste it into WhatsApp, Email or Notes.");
     }
-
 });
