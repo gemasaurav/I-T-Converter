@@ -122,17 +122,6 @@ const pdfInput = document.getElementById("pdfInput");
 
 const browseInput = document.getElementById("browseInput");
 
-// ======================================
-// Camera
-// ======================================
-
-cameraBtn.addEventListener("click", function(){
-
-    console.log("Camera button pressed");
-
-    cameraInput.click();
-
-});
 
 // ======================================
 // Gallery
@@ -219,24 +208,77 @@ function showImage(file){
 
 }
 
-// Camera
+// ======================================
+// LIVE CAMERA (getUserMedia)
+// ======================================
 
-cameraBtn.addEventListener("click", function(){
+const cameraModal    = document.getElementById("cameraModal");
+const cameraVideo    = document.getElementById("cameraVideo");
+const captureBtn     = document.getElementById("captureBtn");
+const closeCameraBtn = document.getElementById("closeCameraBtn");
 
-    cameraInput.setAttribute("capture","environment");
+let cameraStream = null;
 
-    cameraInput.click();
+async function openCamera() {
+  // Prefer rear camera
+  const constraints = {
+    video: {
+      facingMode: { ideal: "environment" },
+      width:  { ideal: 1920 },
+      height: { ideal: 1080 }
+    },
+    audio: false
+  };
 
-});
-cameraInput.addEventListener("change", function(){
-
-    if(this.files.length > 0){
-
-        showImage(this.files[0]);
-
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+    cameraVideo.srcObject = cameraStream;
+    cameraModal.style.display = "flex";
+  } catch (err) {
+    console.error("Primary camera failed:", err);
+    // Fallback to any available camera
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+      cameraVideo.srcObject = cameraStream;
+      cameraModal.style.display = "flex";
+    } catch (err2) {
+      alert("Camera access denied or not available.\n\nPlease allow camera permission and try again.");
     }
+  }
+}
 
+function closeCamera() {
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(track => track.stop());
+    cameraStream = null;
+  }
+  cameraVideo.srcObject = null;
+  cameraModal.style.display = "none";
+}
+
+// Open live camera
+cameraBtn.addEventListener("click", openCamera);
+
+// Close camera
+closeCameraBtn.addEventListener("click", closeCamera);
+
+// Capture photo from live stream
+captureBtn.addEventListener("click", function () {
+  if (!cameraStream) return;
+
+  const canvas = document.createElement("canvas");
+  canvas.width  = cameraVideo.videoWidth;
+  canvas.height = cameraVideo.videoHeight;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(cameraVideo, 0, 0);
+
+  canvas.toBlob(function (blob) {
+    const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
+    showImage(file);   // uses your existing function
+    closeCamera();
+  }, "image/jpeg", 0.92);
 });
+
 // Gallery
 
 galleryInput.addEventListener("change",function(){
